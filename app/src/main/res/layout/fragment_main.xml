@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".fragments.MainFragment">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="net.franzka.courses.CoursesViewModel" />
+
+        <variable
+            name="fragmentMain"
+            type="net.franzka.courses.fragments.MainFragment" />
+
+    </data>
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/tv_username"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:text="@{viewModel.username}"
+            tools:text = "username"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_margin="10dp"/>
+
+
+        <TextView
+            android:id="@+id/tv_token"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:text="@{viewModel.token}"
+            tools:text = "token"
+            app:layout_constraintTop_toBottomOf="@id/tv_username"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_margin="10dp"/>
+
+        <TextView
+            android:id="@+id/tv_connectionCount"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:text="@{String.format(@string/connection_count, viewModel.connectionCount)}"
+            tools:text = "conn"
+            app:layout_constraintTop_toBottomOf="@id/tv_token"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_margin="10dp"/>
+
+        <Button
+            android:id="@+id/tv_change_password"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/modifier_le_mot_de_passe"
+            style = "@style/Widget.AppCompat.Button.Borderless"
+            android:onClick="@{() -> fragmentMain.changePassword()}"
+            android:textColor="@color/design_default_color_primary"
+            app:layout_constraintTop_toBottomOf="@id/tv_connectionCount"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_margin="10dp" />
+
+        <Button
+            android:id="@+id/button_signout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/se_deconnecter"
+            android:onClick="@{() -> fragmentMain.signOut()}"
+            app:layout_constraintTop_toBottomOf="@id/tv_change_password"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_margin="10dp"/>
+
+        <TextView
+            android:id="@+id/tv_message"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+
+            android:textAlignment="center"
+            android:text="@{viewModel.message}"
+            tools:text="message"
+            android:textColor="@{viewModel.status ? @color/green : @color/error}"
+
+            app:layout_constraintTop_toBottomOf="@id/button_signout"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

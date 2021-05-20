@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph.xml"
+    app:startDestination="@id/mainFragment">
+    <fragment
+        android:id="@+id/signInFragment"
+        android:name="net.franzka.courses.fragments.SignInFragment"
+        android:label="fragment_sign_in"
+        tools:layout="@layout/fragment_sign_in" />
+    <fragment
+        android:id="@+id/signUpFragment"
+        android:name="net.franzka.courses.fragments.SignUpFragment"
+        android:label="SignUpFragment" />
+    <fragment
+        android:id="@+id/forgottenPasswordFragment"
+        android:name="net.franzka.courses.fragments.ForgottenPasswordFragment"
+        android:label="fragment_forgotten_password"
+        tools:layout="@layout/fragment_forgotten_password" />
+    <fragment
+        android:id="@+id/mainFragment"
+        android:name="net.franzka.courses.fragments.MainFragment"
+        android:label="fragment_main"
+        tools:layout="@layout/fragment_main" />
+    <fragment
+        android:id="@+id/changePasswordFragment"
+        android:name="net.franzka.courses.fragments.ChangePasswordFragment"
+        android:label="fragment_change_password"
+        tools:layout="@layout/fragment_change_password" />
+</navigation>

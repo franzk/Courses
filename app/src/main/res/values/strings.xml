@@ -1,0 +1,28 @@
+<resources>
+    <string name="app_name">Courses</string>
+
+    <string name="connexion">Connexion</string>
+    <string name="s_enregistrer">S\'enregistrer</string>
+    <string name="vous_n_avez_pas_de_compte">Vous n\'avez pas de compte ?</string>
+    <string name="pseudo_ou_adresse_email">Pseudo ou Adresse email</string>
+    <string name="cr_er_un_utilisateur">Créer un utilisateur</string>
+    <string name="valider">Valider</string>
+    <string name="pseudo">Pseudo</string>
+    <string name="email">Email</string>
+    <string name="mot_de_passe">Mot de passe</string>
+
+    <string name="mot_de_passe_oublie">Mot de passe oublié</string>
+    <string name="envoyer">Envoyer</string>
+    <string name="mot_de_passe_oublie_question">Mot de passe oublie ?</string>
+    <string name="se_connecter"><![CDATA[<< Se connecter]]></string>
+    <string name="se_deconnecter">Se déconnecter</string>
+
+    <string name="connection_count">%s appareil(s) connecté(s)</string>
+
+    <string name="change_password_title">Changement de mot de passe</string>
+    <string name="nouveau_mot_de_passe">Nouveau mot de passe</string>
+    <string name="retour"><![CDATA[<< Retour]]></string>
+    <string name="modifier_le_mot_de_passe">Modifier le mot de passe</string>
+
+
+</resources>
