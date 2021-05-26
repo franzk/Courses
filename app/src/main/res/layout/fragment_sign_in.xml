@@ -2,17 +2,17 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".fragments.SignInFragment">
+    tools:context=".fragments.login.SignInFragment">
 
     <data>
         <import type="android.view.View"/>
         <variable
             name="signInFragment"
-            type="net.franzka.courses.fragments.SignInFragment" />
+            type="net.franzka.courses.fragments.login.SignInFragment" />
 
         <variable
             name="viewModel"
-            type="net.franzka.courses.CoursesViewModel" />
+            type="net.franzka.courses.viewmodels.LoginViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

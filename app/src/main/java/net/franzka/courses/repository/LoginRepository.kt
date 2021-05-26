@@ -6,11 +6,11 @@ import net.franzka.courses.utils.APIConstants
 import retrofit2.Response
 import java.lang.Exception
 
-class Repository {
+class LoginRepository {
 
     suspend fun signUp(username: String, email: String, password: String): Response<CoursesAPIResponse> {
         return try {
-            RetrofitInstance.api.signUp(User(username, email, password))
+            RetrofitInstance.loginAPI.signUp(User(username, email, password))
         }
         catch(e: Exception) {
             Response.success(CoursesAPIResponse(APIConstants.FALSE, APIConstants.CONNECTION_ERROR_MESSAGE, ""))
@@ -19,7 +19,7 @@ class Repository {
 
     suspend fun signIn(login: String, password: String): Response<SignInAPIResponse> {
         return try {
-            RetrofitInstance.api.signIn(login, password)
+            RetrofitInstance.loginAPI.signIn(login, password)
         } catch (e: Exception) {
             Response.success(
                     SignInAPIResponse(APIConstants.FALSE, APIConstants.CONNECTION_ERROR_MESSAGE,
@@ -29,7 +29,7 @@ class Repository {
 
     suspend fun forgottenPassword(login: String) : Response<CoursesAPIResponse> {
         return try {
-            RetrofitInstance.api.forgottenPassword(LoginFP(login))
+            RetrofitInstance.loginAPI.forgottenPassword(BodyForgottenPassword(login))
         } catch (e: Exception) {
             Response.success(CoursesAPIResponse(APIConstants.FALSE, APIConstants.CONNECTION_ERROR_MESSAGE, ""))
         }
@@ -37,7 +37,7 @@ class Repository {
 
     suspend fun changePassword(token: String, password: String) : Response<CoursesAPIResponse> {
         return try {
-            RetrofitInstance.api.changePassword(ChangePassword(token, password))
+            RetrofitInstance.loginAPI.changePassword(BodyChangePassword(token, password))
         } catch (e: Exception) {
             Response.success(CoursesAPIResponse(APIConstants.FALSE, APIConstants.CONNECTION_ERROR_MESSAGE, ""))
         }
@@ -45,7 +45,15 @@ class Repository {
 
     suspend fun signOut(token: String): Response<CoursesAPIResponse> {
         return try {
-            RetrofitInstance.api.signOut(Token(token))
+            RetrofitInstance.loginAPI.signOut(BodyToken(token))
+        } catch (e: Exception) {
+            Response.success(CoursesAPIResponse(APIConstants.FALSE, APIConstants.CONNECTION_ERROR_MESSAGE, ""))
+        }
+    }
+
+    suspend fun signOutAll(token: String): Response<CoursesAPIResponse> {
+        return try {
+            RetrofitInstance.loginAPI.signOutAll(BodyToken(token))
         } catch (e: Exception) {
             Response.success(CoursesAPIResponse(APIConstants.FALSE, APIConstants.CONNECTION_ERROR_MESSAGE, ""))
         }
@@ -53,7 +61,7 @@ class Repository {
 
     suspend fun connectionCount(token: String): Response<ConnectionCountAPIResponse> {
         return try {
-            RetrofitInstance.api.connectionCount(token)
+            RetrofitInstance.loginAPI.connectionCount(token)
         } catch (e: Exception) {
             Response.success(
                     ConnectionCountAPIResponse(APIConstants.FALSE, APIConstants.CONNECTION_ERROR_MESSAGE,

@@ -1,14 +1,19 @@
 package net.franzka.courses.models
 
-data class LoginFP(
+data class BodyForgottenPassword(
     val login: String
 )
 
-data class Token(
-    val token:String
+data class BodyToken(
+    val token: String
 )
 
-data class ChangePassword(
-    val token:String,
+data class BodyChangePassword(
+    val token: String,
     val password: String
+)
+
+data class BodyHomeCreate(
+    val token: String,
+    val name: String
 )

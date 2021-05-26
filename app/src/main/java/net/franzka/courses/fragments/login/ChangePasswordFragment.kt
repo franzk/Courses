@@ -1,4 +1,4 @@
-package net.franzka.courses.fragments
+package net.franzka.courses.fragments.login
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,11 +8,11 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
-import net.franzka.courses.CoursesViewModel
-import net.franzka.courses.CoursesViewModelFactory
+import net.franzka.courses.viewmodels.LoginViewModel
+import net.franzka.courses.viewmodels.LoginViewModelFactory
 import net.franzka.courses.R
 import net.franzka.courses.databinding.FragmentChangePasswordBinding
-import net.franzka.courses.repository.Repository
+import net.franzka.courses.repository.LoginRepository
 
 class ChangePasswordFragment : Fragment() {
 
@@ -22,8 +22,8 @@ class ChangePasswordFragment : Fragment() {
 
     private lateinit var binding: FragmentChangePasswordBinding
 
-    private val coursesViewModel: CoursesViewModel by activityViewModels {
-        CoursesViewModelFactory(Repository(), requireNotNull(this.activity).application )
+    private val loginViewModel: LoginViewModel by activityViewModels {
+        LoginViewModelFactory(LoginRepository(), requireNotNull(this.activity).application )
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -37,13 +37,13 @@ class ChangePasswordFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         binding.apply {
             lifecycleOwner = viewLifecycleOwner
-            viewModel = coursesViewModel
+            viewModel = loginViewModel
             changePasswordFragment = this@ChangePasswordFragment
         }
     }
 
     fun submit() {
-        coursesViewModel.changePassword(binding.edChangePassword.text.toString())
+        loginViewModel.changePassword(binding.edChangePassword.text.toString())
     }
 
     fun back() {

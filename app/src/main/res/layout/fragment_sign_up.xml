@@ -7,11 +7,11 @@
         <import type="android.view.View"/>
         <variable
             name="signUpFragment"
-            type="net.franzka.courses.fragments.SignUpFragment" />
+            type="net.franzka.courses.fragments.login.SignUpFragment" />
 
         <variable
             name="viewModel"
-            type="net.franzka.courses.CoursesViewModel" />
+            type="net.franzka.courses.viewmodels.LoginViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

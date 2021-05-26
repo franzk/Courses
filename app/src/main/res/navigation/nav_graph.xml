@@ -6,16 +6,16 @@
     app:startDestination="@id/mainFragment">
     <fragment
         android:id="@+id/signInFragment"
-        android:name="net.franzka.courses.fragments.SignInFragment"
+        android:name="net.franzka.courses.fragments.login.SignInFragment"
         android:label="fragment_sign_in"
         tools:layout="@layout/fragment_sign_in" />
     <fragment
         android:id="@+id/signUpFragment"
-        android:name="net.franzka.courses.fragments.SignUpFragment"
+        android:name="net.franzka.courses.fragments.login.SignUpFragment"
         android:label="SignUpFragment" />
     <fragment
         android:id="@+id/forgottenPasswordFragment"
-        android:name="net.franzka.courses.fragments.ForgottenPasswordFragment"
+        android:name="net.franzka.courses.fragments.login.ForgottenPasswordFragment"
         android:label="fragment_forgotten_password"
         tools:layout="@layout/fragment_forgotten_password" />
     <fragment
@@ -25,7 +25,15 @@
         tools:layout="@layout/fragment_main" />
     <fragment
         android:id="@+id/changePasswordFragment"
-        android:name="net.franzka.courses.fragments.ChangePasswordFragment"
+        android:name="net.franzka.courses.fragments.login.ChangePasswordFragment"
         android:label="fragment_change_password"
         tools:layout="@layout/fragment_change_password" />
+    <fragment
+        android:id="@+id/homeCreateFragment"
+        android:name="net.franzka.courses.fragments.home.HomeCreateFragment"
+        android:label="HomeCreateFragment" />
+    <fragment
+        android:id="@+id/homeListFragment"
+        android:name="net.franzka.courses.fragments.home.HomeListFragment"
+        android:label="HomeListFragment" />
 </navigation>

@@ -1,4 +1,4 @@
-package net.franzka.courses.fragments
+package net.franzka.courses.fragments.login
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -6,20 +6,20 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
-import net.franzka.courses.CoursesViewModel
-import net.franzka.courses.CoursesViewModelFactory
+import net.franzka.courses.viewmodels.LoginViewModel
+import net.franzka.courses.viewmodels.LoginViewModelFactory
 import net.franzka.courses.R
 import net.franzka.courses.databinding.FragmentSignUpBinding
-import net.franzka.courses.repository.Repository
+import net.franzka.courses.repository.LoginRepository
 
 class SignUpFragment : Fragment() {
 
     private lateinit var binding: FragmentSignUpBinding
 
-    private val coursesViewModel: CoursesViewModel by viewModels {
-        CoursesViewModelFactory(Repository(), requireNotNull(this.activity).application )
+    private val loginViewModel: LoginViewModel by activityViewModels {
+        LoginViewModelFactory(LoginRepository(), requireNotNull(this.activity).application )
     }
 
     override fun onCreateView(
@@ -35,14 +35,14 @@ class SignUpFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         binding.apply {
             lifecycleOwner = viewLifecycleOwner
-            viewModel = coursesViewModel
+            viewModel = loginViewModel
             signUpFragment = this@SignUpFragment
         }
 
     }
 
     fun signUp() {
-        coursesViewModel.signUp(binding.edUsername.text.toString(), binding.edEmail.text.toString(), binding.edPassword.text.toString())
+        loginViewModel.signUp(binding.edUsername.text.toString(), binding.edEmail.text.toString(), binding.edPassword.text.toString())
     }
 
     fun backToLogin() {

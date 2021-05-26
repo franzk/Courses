@@ -9,11 +9,11 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
-import net.franzka.courses.CoursesViewModel
-import net.franzka.courses.CoursesViewModelFactory
+import net.franzka.courses.viewmodels.LoginViewModel
+import net.franzka.courses.viewmodels.LoginViewModelFactory
 import net.franzka.courses.R
 import net.franzka.courses.databinding.FragmentMainBinding
-import net.franzka.courses.repository.Repository
+import net.franzka.courses.repository.LoginRepository
 
 class MainFragment : Fragment() {
 
@@ -21,8 +21,8 @@ class MainFragment : Fragment() {
         private const val TAG = "MainFragment"
     }
 
-    private val coursesViewModel: CoursesViewModel by activityViewModels {
-        CoursesViewModelFactory(Repository(), requireNotNull(this.activity).application )
+    private val loginViewModel: LoginViewModel by activityViewModels {
+        LoginViewModelFactory(LoginRepository(), requireNotNull(this.activity).application )
     }
 
     private lateinit var binding: FragmentMainBinding
@@ -32,8 +32,8 @@ class MainFragment : Fragment() {
                               savedInstanceState: Bundle?): View {
 
         // si la connexion de l'tilisateur n'est pas enregistrée, on affiche l'écran de sign in
-        coursesViewModel.loadShardPrefs()
-        if (coursesViewModel.token.value.isNullOrEmpty()) { findNavController().navigate(R.id.signInFragment) }
+        loginViewModel.loadShardPrefs()
+        if (loginViewModel.token.value.isNullOrEmpty()) { findNavController().navigate(R.id.signInFragment) }
 
 
         // Inflate the layout for this fragment
@@ -47,10 +47,10 @@ class MainFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         binding.apply {
             lifecycleOwner = viewLifecycleOwner
-            viewModel = coursesViewModel
+            viewModel = loginViewModel
             fragmentMain = this@MainFragment
         }
-        coursesViewModel.authenticated.observe(viewLifecycleOwner,  {
+        loginViewModel.authenticated.observe(viewLifecycleOwner,  {
             if ((it == null) || (!it))
                 findNavController().navigate(R.id.signInFragment)
         })
@@ -62,8 +62,17 @@ class MainFragment : Fragment() {
     }
 
     fun signOut() {
-        coursesViewModel.signOut()
+        loginViewModel.signOut(false)
         findNavController().navigate(R.id.signInFragment)
+    }
+
+    fun signOutAll() {
+        loginViewModel.signOut(true)
+        findNavController().navigate(R.id.signInFragment)
+    }
+
+    fun homes() {
+        findNavController().navigate(R.id.homeListFragment)
     }
 
 }

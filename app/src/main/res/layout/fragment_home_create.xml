@@ -1,89 +1,86 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".fragments.login.ForgottenPasswordFragment">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
         <import type="android.view.View"/>
         <variable
-            name="viewModel"
-            type="net.franzka.courses.viewmodels.LoginViewModel" />
+            name="homeCreateFragment"
+            type="net.franzka.courses.fragments.home.HomeCreateFragment" />
 
         <variable
-            name="forgottenPasswordFragment"
-            type="net.franzka.courses.fragments.login.ForgottenPasswordFragment" />
-
+            name="viewModel"
+            type="net.franzka.courses.viewmodels.HomeViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_width="match_parent"
         android:padding="10dp">
 
         <TextView
             android:id="@+id/tv_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/mot_de_passe_oublie"
-
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            />
-
-        <EditText
-            android:id="@+id/ed_login"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:inputType="text"
 
-            android:hint="@string/pseudo_ou_adresse_email"
+            android:textAlignment="center"
+            android:text="@string/creer_un_foyer"
 
-            app:layout_constraintTop_toBottomOf="@id/tv_title"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <EditText
+            android:id="@+id/ed_home_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:hint="@string/nom_du_foyer"
+            android:inputType="textPersonName"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_title"
             android:autofillHints="" />
+
 
         <Button
             android:id="@+id/button_submit"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:padding="10dp"
 
-            android:text="@string/envoyer"
-
-            android:onClick="@{() -> forgottenPasswordFragment.submit()}"
+            android:text="@string/valider"
+            android:onClick="@{() -> homeCreateFragment.submit()}"
 
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.526"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/ed_login" />
+            app:layout_constraintTop_toBottomOf="@+id/ed_home_name" />
 
         <TextView
-            android:id="@+id/tv_message"
+            android:id="@+id/tv_error_message"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
 
             android:textAlignment="center"
             android:text="@{viewModel.message}"
             tools:text="message"
-            android:textColor="@{viewModel.status ? @color/green : @color/error}"
 
             app:layout_constraintTop_toBottomOf="@id/button_submit"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintEnd_toEndOf="parent"
+            android:textColor="@{viewModel.status ? @color/green : @color/error}"/>
 
         <Button
-            android:id="@+id/button_back_to_login"
+            android:id="@+id/button_back"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
 
-            android:text="@string/se_connecter"
+            android:text="@string/retour"
 
-            android:visibility="@{viewModel.status ? View.VISIBLE : View.INVISIBLE}"
-            android:onClick="@{() -> forgottenPasswordFragment.backToLogin()}"
+            android:onClick="@{() -> homeCreateFragment.back()}"
 
-            app:layout_constraintTop_toBottomOf="@+id/tv_message"
+            app:layout_constraintTop_toBottomOf="@+id/tv_error_message"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             style="@style/Widget.MaterialComponents.Button.OutlinedButton" />
@@ -104,4 +101,5 @@
             />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
 </layout>

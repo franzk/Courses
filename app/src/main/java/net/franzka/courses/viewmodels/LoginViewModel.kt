@@ -1,13 +1,15 @@
-package net.franzka.courses
+package net.franzka.courses.viewmodels
 
 import android.app.Application
 import android.content.Context
 import androidx.lifecycle.*
 import kotlinx.coroutines.launch
-import net.franzka.courses.repository.Repository
+import net.franzka.courses.repository.LoginRepository
 import net.franzka.courses.utils.APIConstants
+import net.franzka.courses.utils.Constants
+import net.franzka.courses.utils.Utils
 
-class CoursesViewModel(private val repository: Repository, application: Application
+class LoginViewModel(private val loginRepository: LoginRepository, application: Application
 ) : AndroidViewModel(application) {
 
     companion object {
@@ -40,8 +42,9 @@ class CoursesViewModel(private val repository: Repository, application: Applicat
 
     fun loadShardPrefs() {
 
-        _username.value = sharedPref.getString(APIConstants.KEY_USERNAME, "")
-        _token.value = sharedPref.getString(APIConstants.KEY_TOKEN, "")
+        _username.value = sharedPref.getString(Constants.KEY_USERNAME, "")
+        _token.value = sharedPref.getString(Constants.KEY_TOKEN, "")
+        Utils.setAppToken(_token.value)
         _token.value?.let {
             if (it.isNotEmpty()) connectionCount(it)
         }
@@ -51,8 +54,8 @@ class CoursesViewModel(private val repository: Repository, application: Applicat
     private fun setShardPrefs() {
 
         with(sharedPref.edit()) {
-            putString(APIConstants.KEY_USERNAME, _username.value)
-            putString(APIConstants.KEY_TOKEN, _token.value)
+            putString(Constants.KEY_USERNAME, _username.value)
+            putString(Constants.KEY_TOKEN, _token.value)
             apply()
         }
     }
@@ -62,7 +65,7 @@ class CoursesViewModel(private val repository: Repository, application: Applicat
         _waitingForResponse.value = true
 
         viewModelScope.launch {
-            val response = repository.signUp(username, email, password)
+            val response = loginRepository.signUp(username, email, password)
             _status.value = (response.body()?.status == APIConstants.TRUE)
             _message.value = response.body()?.message ?: ""
             _waitingForResponse.value = false
@@ -76,13 +79,14 @@ class CoursesViewModel(private val repository: Repository, application: Applicat
 
         viewModelScope.launch {
 
-            val response = repository.signIn(login, password)
+            val response = loginRepository.signIn(login, password)
             _status.value = (response.body()?.status == APIConstants.TRUE)
             _message.value = response.body()?.message ?: ""
 
             if (_status.value == true) {
                 _username.value = response.body()?.result?.username
                 _token.value = response.body()?.result?.token
+                Utils.setAppToken(_token.value)
                 setShardPrefs()
                 _authenticated.value = true
             }
@@ -96,7 +100,7 @@ class CoursesViewModel(private val repository: Repository, application: Applicat
         _waitingForResponse.value = true
 
         viewModelScope.launch {
-            val response = repository.forgottenPassword(login)
+            val response = loginRepository.forgottenPassword(login)
             _status.value = (response.body()?.status == APIConstants.TRUE)
             _message.value = response.body()?.message ?: ""
             _waitingForResponse.value = false
@@ -110,7 +114,7 @@ class CoursesViewModel(private val repository: Repository, application: Applicat
         _waitingForResponse.value = true
 
         viewModelScope.launch {
-            val response = repository.changePassword(_token.value ?: "", newPassword)
+            val response = loginRepository.changePassword(_token.value ?: "", newPassword)
             _status.value = (response.body()?.status == APIConstants.TRUE)
             _message.value = response.body()?.message ?: ""
             _waitingForResponse.value = false
@@ -122,10 +126,13 @@ class CoursesViewModel(private val repository: Repository, application: Applicat
     }
 
 
-    fun signOut() {
+    fun signOut(signOutAll: Boolean) {
 
         viewModelScope.launch {
-            val response = repository.signOut(_token.value!!)
+            if (signOutAll)
+                loginRepository.signOutAll(_token.value!!)
+            else
+                loginRepository.signOut(_token.value!!)
             resetData()
             setShardPrefs()
             _authenticated.value = false
@@ -133,12 +140,13 @@ class CoursesViewModel(private val repository: Repository, application: Applicat
 
     }
 
+
     private fun connectionCount(token: String) {
 
         _waitingForResponse.value = true
 
         viewModelScope.launch {
-            val response = repository.connectionCount(token)
+            val response = loginRepository.connectionCount(token)
             _status.value = (response.body()?.status == APIConstants.TRUE)
             if (_status.value == true) {
                 _connectionCount.value = response.body()?.result?.count
@@ -152,6 +160,7 @@ class CoursesViewModel(private val repository: Repository, application: Applicat
     private fun resetData() {
         _username.value = ""
         _token.value = ""
+        Utils.setAppToken(_token.value)
         _message.value = ""
         _status.value = false
         _connectionCount.value = 0
@@ -159,8 +168,8 @@ class CoursesViewModel(private val repository: Repository, application: Applicat
 
 }
 
-class CoursesViewModelFactory(private val repository: Repository/*, private val activity: Activity*/, private val application: Application): ViewModelProvider.Factory {
+class LoginViewModelFactory(private val loginRepository: LoginRepository, private val application: Application): ViewModelProvider.Factory {
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-        return CoursesViewModel(repository, application) as T
+        return LoginViewModel(loginRepository, application) as T
     }
 }
